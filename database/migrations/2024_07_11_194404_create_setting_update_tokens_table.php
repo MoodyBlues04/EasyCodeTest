@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('setting_update_tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->text('description')->nullable();
+            $table->string('value');
+            $table->string('token');
+            $table->foreignId('user_setting_id');
+            $table->foreign('user_setting_id')
+                ->references('id')
+                ->on('user_has_settings')
+                ->onDelete('cascade');
             $table->timestamps();
         });
-
     }
 
     /**
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('setting_update_tokens');
     }
 };
