@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Database\Seeders\UserSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +26,6 @@ class SettingUpdateToken extends Model
 
     public function userSetting(): BelongsTo
     {
-        return $this->belongsTo(UserSeeder::class, 'user_setting_id');
+        return $this->belongsTo(UserSetting::class, 'user_setting_id');
     }
 }

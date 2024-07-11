@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -33,8 +35,13 @@ class UserSetting extends Model
         return $this->belongsTo(Setting::class, 'setting_id');
     }
 
-    public function settingUpdateToken(): HasMany
+    public function settingUpdateToken(): HasOne
     {
-        return $this->hasMany(SettingUpdateToken::class, 'user_setting_id');
+        return $this->hasOne(SettingUpdateToken::class, 'user_setting_id');
+    }
+
+    public function setUpdateToken(string $value): void
+    {
+        $this->settingUpdateToken()->firstOrCreate(['value' => $value], ['token' => Str::random()]);
     }
 }

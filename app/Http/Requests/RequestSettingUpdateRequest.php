@@ -25,7 +25,7 @@ class RequestSettingUpdateRequest extends FormRequest
     {
         return [
             'value' => 'required|string',
-            'confirmation_type' => 'required|string|' . Rule::in(SendType::names()),
+            'confirmation_type' => ['required', 'string', Rule::enum(SendType::class)],
         ];
     }
 }

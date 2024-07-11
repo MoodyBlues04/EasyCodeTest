@@ -6,15 +6,15 @@ use App\Http\Requests\RequestSettingUpdateRequest;
 use App\Models\User;
 use App\Models\UserSetting;
 use App\Modules\Notifications\SendType;
-use App\Repositories\SettingsRepository;
-use App\View\Objects\DropdownItem;
+use App\Services\SettingsUpdateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
-    public function __construct(private readonly SettingsRepository $settingsRepository)
-    {
+    public function __construct(
+        private readonly SettingsUpdateService $settingsUpdateService
+    ) {
         $this->middleware('auth');
     }
 
@@ -28,17 +28,19 @@ class SettingsController extends Controller
 
     public function edit(UserSetting $setting): View
     {
-        $confirmationTypes = array_map(fn (string $name) => new DropdownItem($name, $name), SendType::names());
+        $confirmationTypes = SendType::cases();
         return view('user.settings.edit', compact('setting', 'confirmationTypes'));
     }
 
     public function requestUpdate(UserSetting $setting, RequestSettingUpdateRequest $request): View
     {
-        dd($setting, $request);
+        $this->settingsUpdateService->sendConfirmationMessage($setting, $request);
+        return view('user.settings.request_update', compact('setting'));
     }
 
-    public function confirmUpdate(UserSetting $setting): RedirectResponse
+    public function confirmUpdate(string $token): RedirectResponse
     {
-        dd($setting);
+        $this->settingsUpdateService->confirmUpdate($token);
+        return redirect()->route('user.settings.index')->with('success', 'Setting updated');
     }
 }

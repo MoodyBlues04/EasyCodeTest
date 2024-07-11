@@ -2,14 +2,17 @@
 
 namespace App\Modules\Notifications;
 
-enum SendType
-{
-    case TG;
-    case EMAIL;
-    case SMS;
+use App\View\Objects\DropdownItem;
+use App\View\Objects\ToDropdownItemInterface;
 
-    public static function names(): array
+enum SendType: string implements ToDropdownItemInterface
+{
+    case TG = 'tg';
+    case EMAIL = 'email';
+    case SMS = 'sms';
+
+    public function toDropdownItem(): DropdownItem
     {
-        return array_column(self::cases(), 'name');
+        return new DropdownItem($this->name, $this->value);
     }
 }

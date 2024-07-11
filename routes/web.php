@@ -21,8 +21,10 @@ Route::group([], __DIR__ . '/web/auth.php');
 Route::group(['middleware' => 'auth', 'as' => 'user.', 'prefix' => 'user'], function () {
     Route::get('/settings', SettingsController::class . '@index')->name('settings.index');
     Route::get('/settings/{setting}/edit', SettingsController::class . '@edit')->name('settings.edit');
-    Route::patch('/settings/{setting}', SettingsController::class . '@requestUpdate')->name('settings.request_update');
-    Route::post('/settings/{setting}', SettingsController::class . '@confirmUpdate')->name('settings.confirm_update');
+    Route::patch('/settings/{setting}/request_update', SettingsController::class . '@requestUpdate')
+        ->name('settings.request_update');
+    Route::get('/settings/{token}/confirm_update', SettingsController::class . '@confirmUpdate')
+        ->name('settings.confirm_update');
 });
 Route::view('/', 'user.home')->middleware('auth')->name('home');
 
