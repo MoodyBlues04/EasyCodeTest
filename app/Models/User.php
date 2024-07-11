@@ -62,4 +62,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Setting::class, 'user_has_settings', 'user_id', 'setting_id')
             ->withPivot(['value']);
     }
+
+    public function attachDefaultSettings(): void
+    {
+        $this->settings()->detach();
+        $ids = Setting::mapAll(fn (Setting $setting) => $setting->id);
+        $this->settings()->attach($ids);
+    }
 }

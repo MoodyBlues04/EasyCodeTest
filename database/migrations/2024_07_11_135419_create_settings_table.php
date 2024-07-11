@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
         });
         Schema::create('user_has_settings', function (Blueprint $table) {
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->foreignId('user_id');
             $table->foreign('user_id')
                 ->references('id')

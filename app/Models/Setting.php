@@ -28,4 +28,9 @@ class Setting extends Model
         return $this->belongsToMany(User::class, 'user_has_settings', 'setting_id', 'user_id')
             ->withPivot(['value']);
     }
+
+    public static function mapAll(callable $callback): array
+    {
+        return self::query()->get()->map($callback)->all();
+    }
 }

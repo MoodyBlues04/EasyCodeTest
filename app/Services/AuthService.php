@@ -26,6 +26,7 @@ class AuthService
         $user = $this->userRepository->createFromRequest($request);
 
         $user->sendEmailVerificationNotification();
+        $user->attachDefaultSettings();
 
         $credentials = $request->only('email', 'password');
         return Auth::attempt($credentials);
