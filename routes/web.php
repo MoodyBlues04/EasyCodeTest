@@ -14,8 +14,6 @@ use App\Http\Controllers\SettingsController;
 |
 */
 
-// TODO: settings upd logic, rewrite from blade to vue
-
 Route::group([], __DIR__ . '/web/auth.php');
 
 Route::group(['middleware' => 'auth', 'as' => 'user.', 'prefix' => 'user'], function () {
