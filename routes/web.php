@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// TODO: migrations, auth, settings upd logic, rewrite from blade to vue
+
 Route::get('/', function () {
     return view('welcome');
 });
