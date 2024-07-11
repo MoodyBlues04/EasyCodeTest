@@ -34,7 +34,6 @@ class SettingsUpdateService
     private function makeUpdateConfirmationContent(UserSetting $setting): string
     {
         $link = route('user.settings.confirm_update', $setting->settingUpdateToken->token);
-        return "<p>Click here: <a href='{$link}'>click</a>
-            to confirm update of setting: '{$setting->setting->name}' to: '{$setting->settingUpdateToken->value}'</p>";
+        return "Click here: <a href='{$link}'>click</a> to confirm update of setting: '{$setting->setting->name}' to: '{$setting->settingUpdateToken->value}'";
     }
 }
