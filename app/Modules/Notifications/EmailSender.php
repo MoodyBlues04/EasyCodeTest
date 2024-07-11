@@ -13,7 +13,7 @@ class EmailSender implements Sender
     {
         Mail::send('mail.blank', ['content' => $content], function(Message $message) use ($recipient, $subject) {
             $message
-                ->from('sokant2005@mail.ru') // todo from .env
+                ->from(env('MAIL_USERNAME'))
                 ->to($recipient->email)
                 ->subject($subject);
         });
