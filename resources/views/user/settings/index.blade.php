@@ -1,5 +1,5 @@
 <?php
-/** @var \App\Models\Setting[] $settings */
+/** @var \App\Models\UserSetting[] $settings */
 ?>
 
 @extends('layout')
@@ -22,9 +22,9 @@
                 @foreach($settings as $setting)
                     <tr>
                         <th scope="row">{{ $setting->id }}</th>
-                        <td>{{ $setting->name }}</td>
-                        <td>{{ $setting->description }}</td>
-                        <td>{{ $setting->pivot->value ?? '_' }}</td>
+                        <td>{{ $setting->setting->name }}</td>
+                        <td>{{ $setting->setting->description }}</td>
+                        <td>{{ $setting->value ?? '_' }}</td>
                         <td>
                             <x-edit-button :model="$setting" routeName="user.settings.edit"/>
                         </td>
