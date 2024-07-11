@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// TODO: migrations, auth, settings upd logic, rewrite from blade to vue
+// TODO: settings upd logic, rewrite from blade to vue
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::group([], __DIR__ . '/web/auth.php');
+Route::prefix('user')
+    ->as('user.')
+    ->middleware(['auth', 'verified', 'user'])
+    ->group(__DIR__ . '/web/user.php');
+Route::view('/', 'user.home')->middleware('auth')->name('home');
+
